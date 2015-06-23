@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Busqueda de Automoviles</title>
+        <style type="text/css">
+            .margenForm {
+                margin-top: 7px;
+            }
+            .margenDatePicker {
+                margin: 9px !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <h:form id="form2">
+            <b:container>
+                <b:row>
+                    <b:column span="12">
+                        <h3>B&uacute;squeda de Automoviles</h3>
+                        <h4>Filtros</h4>
+                        <b:column span="4">
+                            <h:panelGrid columns="2" style="width: 90%;">
+                                <h:outputText value="Marca:"/>
+                                <b:selectOneMenu value="" styleClass="margenForm">
+                                    <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                </b:selectOneMenu>
+                                <h:outputText value="Modelo:"/>
+                                <b:selectOneMenu value="" styleClass="margenForm">
+                                    <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                </b:selectOneMenu>
+                                <h:outputText value="A&ntilde;o:"/>
+                                <b:selectOneMenu value="" styleClass="margenForm">
+                                    <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                </b:selectOneMenu>
+                            </h:panelGrid>
+                        </b:column>
+                        <b:column span="4">
+                            <h:panelGrid columns="2" style="width: 90%">
+                                <h:outputText value="Tipo:"/>
+                                <b:selectOneMenu value="" styleClass="margenForm">
+                                    <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                </b:selectOneMenu>
+                                <h:outputText value="Propietario:"/>
+                                <b:selectOneMenu value="" styleClass="margenForm">
+                                    <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                </b:selectOneMenu>
+                                <h:outputText value="Placa:"/>
+                                <b:inputText value="" styleClass="margenForm"/>
+                            </h:panelGrid>
+                        </b:column>
+                        <b:column span="4" >
+                            <h:panelGrid columns="2" style="width: 90%;">
+                                <h:outputText value="Num. motor:"/>
+                                <b:inputText value="" styleClass="margenForm"/>
+                                <h:outputText value="Num. chasis:"/>
+                                <b:inputText value="" styleClass="margenForm"/>
+                                <p:spacer/>
+                                <p:spacer/>
+                            </h:panelGrid>
+                        </b:column>
+                    </b:column>
+                </b:row>
+                <b:row>
+                        
+                    <b:column span="12" >
+                        <p:separator/>
+                        <b:commandButton value="PDF" iconAwesome="fa fa-document" look="success" style="float: right"/>
+                        <p:dataTable id="autosTable" paginator="true" emptyMessage="No se han encontrado registros">
+                            <f:facet name="header">
+                                Listado de Automoviles
+                                
+                            </f:facet>
+                            <p:column headerText="Marca">
+                                
+                            </p:column>
+                            <p:column headerText="Modelo">
+                                
+                            </p:column>
+                            <p:column headerText="A&ntilde;o">
+                                
+                            </p:column>
+                            <p:column headerText="Num. motor">
+                                
+                            </p:column>
+                            <p:column headerText="Num. chasis">
+                                
+                            </p:column>
+                            <p:column headerText="Placa">
+                                
+                            </p:column>
+                            <p:column headerText="Propietario">
+                                
+                            </p:column>
+                            <p:column headerText="Tipo">
+                                
+                            </p:column>
+                            <p:column headerText="Color">
+                                
+                            </p:column>
+                        </p:dataTable>
+                    </b:column>
+                </b:row>
+            </b:container>
+        </h:form>
+    </h:body>
+</html>
+
