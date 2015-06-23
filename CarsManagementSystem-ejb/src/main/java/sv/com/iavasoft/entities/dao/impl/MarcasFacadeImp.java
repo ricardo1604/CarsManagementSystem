@@ -38,7 +38,7 @@ public class MarcasFacadeImp implements MarcasFacade {
     }
 
     @Override
-    public Marcas find(int entityID) {
+    public Marcas find(Long entityID) {
         return marcasDao.find(entityID);
     }
 

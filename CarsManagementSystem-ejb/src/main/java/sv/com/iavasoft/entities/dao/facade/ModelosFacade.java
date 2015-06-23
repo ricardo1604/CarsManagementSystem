@@ -19,7 +19,10 @@ public interface ModelosFacade {
     
     public abstract void delete(Modelos modelo);
 
-    public abstract Modelos find(int entityID);
+    public abstract Modelos find(Long entityID);
 
     public abstract List<Modelos> findAll();
+    
+    public List<Modelos> findByMarca(Long marcaId);
+    
 }

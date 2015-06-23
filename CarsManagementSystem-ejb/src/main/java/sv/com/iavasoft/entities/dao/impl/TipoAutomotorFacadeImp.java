@@ -38,7 +38,7 @@ public class TipoAutomotorFacadeImp implements TipoAutomotorFacade{
     }
 
     @Override
-    public TipoAutomotor find(int entityID) {
+    public TipoAutomotor find(Long entityID) {
         return tipoAutomotorDao.find(entityID);
     }
 

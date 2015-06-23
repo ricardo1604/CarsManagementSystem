@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
-    
+
     <ui:composition template="/WEB-INF/plantilla/TemplateApp.xhtml">
         <ui:define name="content">
             <h:head>
@@ -21,62 +21,105 @@
                 </style>
             </h:head>
             <h:body>
-                <h:form>
+                <p:growl id="growl" showDetail="true" sticky="true" life="4000" autoUpdate="true"/>
+                <h:form id="form1">
                     <b:container>
                         <b:row>
                             <b:column span="12">
                                 <b:well>
                                     <center>
-                                    <h3>INGRESAR DATOS DE AUTOMOVIL</h3>
-                                    <h:panelGrid columns="2" style="width: 50%">
-                                        <h:outputText value="ID::" rendered="false"/>
-                                        <b:inputText value="" styleClass="margenForm" rendered="false"/>
-                                        <h:outputText value="Marca:"/>
-                                        <b:selectOneMenu value="" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
-                                        </b:selectOneMenu>
-                                        <h:outputText value="Modelo:"/>
-                                        <b:selectOneMenu value="" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
-                                        </b:selectOneMenu>
-                                        <h:outputText value="A&ntilde;o:"/>
-                                        <b:selectOneMenu value="" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
-                                        </b:selectOneMenu>
-                                        <h:outputText value="Color:"/>
-                                        <b:inputText value="" styleClass="margenForm"/>
-                                        <h:outputText value="Num. motor:"/>
-                                        <b:inputText value="" styleClass="margenForm"/>
-                                        <h:outputText value="Num. chasis:"/>
-                                        <b:inputText value="" styleClass="margenForm"/>
-                                        <h:outputText value="Placa:"/>
-                                        <b:inputText value="" styleClass="margenForm"/>
-                                        <h:outputText value="Num. asientos:"/>
-                                        <b:inputText value="" styleClass="margenForm"/>
-                                        <h:outputText value="Tipo:"/>
-                                        <b:selectOneMenu value="" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
-                                        </b:selectOneMenu>
-                                        <h:outputText value="Propietario:"/>
-                                        <b:selectOneMenu value="" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
-                                        </b:selectOneMenu>
-                                        
-                                    </h:panelGrid>
-                                    <p:separator/>
-                                    <h:panelGrid columns="3" style="width: 50%; text-align: center">
-                                        <b:commandButton iconAwesome="fa fa-save" value="Guardar" look="primary"/>
-                                        <p:spacer/>
-                                        <b:commandButton iconAwesome="fa fa-close" value="Cancelar"/>
-                                    </h:panelGrid>
-                                    
-                                    
+                                        <h3>INGRESAR DATOS DE AUTOMOVIL</h3>
+                                        <h:panelGrid columns="2" style="width: 50%">
+                                            <h:outputText value="ID::" rendered="false"/>
+                                            <b:inputText value="" styleClass="margenForm" rendered="false"/>
+                                            <h:outputText value="Marca:"/>
+                                            <p:selectOneMenu value="#{agregarAutosBean.marcaSelected}" styleClass="margenForm" style="width: 60%">
+                                                <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                                <f:selectItems value="#{agregarAutosBean.marcasLst}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.id}"/>
+                                                <p:ajax event="change" listener="#{agregarAutosBean.buscarModeloByMarca()}" update=":form1:cmbModelos"/>
+                                            </p:selectOneMenu>
+                                            <h:outputText value="Modelo:"/>
+                                            <p:selectOneMenu id="cmbModelos" value="#{agregarAutosBean.modeloSelected}" styleClass="margenForm" style="width: 60%">
+                                                <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                                <f:selectItems value="#{agregarAutosBean.modelosLst}" var="mode" itemLabel="#{mode.nombre}" itemValue="#{mode.id}"/>
+                                            </p:selectOneMenu>
+                                            <h:outputText value="A&ntilde;o:"/>
+                                            <p:selectOneMenu value="#{agregarAutosBean.auto.anio}" styleClass="margenForm" style="width: 60%">
+                                                <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                                <f:selectItem itemValue="2016" itemLabel="2016"/>
+                                                <f:selectItem itemValue="2015" itemLabel="2015"/>
+                                                <f:selectItem itemValue="2014" itemLabel="2014"/>
+                                                <f:selectItem itemValue="2013" itemLabel="2013"/>
+                                                <f:selectItem itemValue="2012" itemLabel="2012"/>
+                                                <f:selectItem itemValue="2011" itemLabel="2011"/>
+                                                <f:selectItem itemValue="2010" itemLabel="2010"/>
+                                                <f:selectItem itemValue="2009" itemLabel="2009"/>
+                                                <f:selectItem itemValue="2008" itemLabel="2008"/>
+                                            </p:selectOneMenu>
+                                            <h:outputText value="Tipo:"/>
+                                            <p:selectOneMenu value="#{agregarAutosBean.tipoAutoSelected}" styleClass="margenForm" style="width: 60%">
+                                                <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                                <f:selectItems value="#{agregarAutosBean.tipoAutomotorLst}" var="ta" itemLabel="#{ta.nombre}" itemValue="#{ta.id}"/>
+                                            </p:selectOneMenu>
+                                            <h:outputText value="Color:"/>
+                                            <b:inputText value="#{agregarAutosBean.auto.color}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+                                            <h:outputText value="Num. motor:"/>
+                                            <b:inputText value="#{agregarAutosBean.auto.numMotor}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+                                            <h:outputText value="Num. chasis:"/>
+                                            <b:inputText value="#{agregarAutosBean.auto.numChasis}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+                                            <h:outputText value="Placa:"/>
+                                            <b:inputText value="#{agregarAutosBean.auto.placas}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+                                            <h:outputText value="Num. asientos:"/>
+                                            <b:inputText value="#{agregarAutosBean.auto.numAsientos}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+
+                                            <h:outputText value="Propietario:"/>
+                                            <b:inputText id="txtProp" value="#{agregarAutosBean.propietario.nombres} #{agregarAutosBean.propietario.apellidos}" fieldSize="sm" readonly="true" style="font-size: medium">
+                                                <f:facet name="append">
+                                                    <b:commandButton ajax="true" value="" look="success" iconAwesome="fa fa-plus" size="sm" onclick="PF('propDlg').show();" />
+                                                </f:facet>
+                                            </b:inputText>
+
+                                        </h:panelGrid>
+                                        <p:separator/>
+                                        <h:panelGrid columns="3" style="width: 50%; text-align: center">
+                                            <b:commandButton iconAwesome="fa fa-close" value="Cancelar"/>
+                                            <p:spacer/>
+                                            <b:commandButton iconAwesome="fa fa-save" value="Guardar" look="primary" actionListener="#{agregarAutosBean.guardarAuto()}"  />
+                                        </h:panelGrid>
+
+
                                     </center>
                                 </b:well>
                             </b:column>
                         </b:row>
                     </b:container>
+
                 </h:form>
+
+                <h:form>
+                    <p:dialog header="Agregar Propietario" widgetVar="propDlg" modal="true" style="width: 90%" showEffect="fade" hideEffect="hide" resizable="false" closable="false" closeOnEscape="true">
+                        <center>
+                            <h:panelGrid columns="2">
+                                <h:outputText value="Nombres:"/>
+                                <b:inputText value="#{agregarAutosBean.propietario.nombres}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+                                <h:outputText value="Apellidos: "/>
+                                <b:inputText value="#{agregarAutosBean.propietario.apellidos}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+                                <h:outputText value="Documento ident.:"/>
+                                <b:inputText value="#{agregarAutosBean.propietario.documentoIdentidad}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+                                <h:outputText value="NIT:"/>
+                                <b:inputText value="#{agregarAutosBean.propietario.nit}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+                                <h:outputText value="Direcci&oacute;n"/>
+                                <b:inputText value="#{agregarAutosBean.propietario.direccion}" styleClass="margenForm" fieldSize="sm" style="font-size: medium"/>
+                            </h:panelGrid>
+                            <p:separator/>
+                            <b:button value="Cancelar" onclick="PF('propDlg').hide();" iconAwesome="fa fa-close"/>
+                            <p:spacer/>
+                            <b:commandButton value="Guardar" look="primary" iconAwesome="fa fa-save" onclick="PF('propDlg').hide();" actionListener="#{agregarAutosBean.guardarPropietario()}"/>
+
+                        </center>
+                    </p:dialog>
+                </h:form>
+
             </h:body>
         </ui:define>
     </ui:composition>

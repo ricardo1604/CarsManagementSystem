@@ -38,7 +38,7 @@ public class AutosFacadeImp implements AutosFacade {
     }
 
     @Override
-    public Autos find(int entityID) {
+    public Autos find(Long entityID) {
         return autosDao.find(entityID);
     }
 

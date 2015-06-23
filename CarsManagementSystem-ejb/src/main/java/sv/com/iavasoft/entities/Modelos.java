@@ -30,7 +30,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "modelos")
 @NamedQueries({
-    @NamedQuery(name = "Modelos.findByMarca", query = "SELECT m FROM Modelos m WHERE m.marca = :marca")})
+    @NamedQuery(name = "Modelos.findByMarca", query = "SELECT m FROM Modelos m WHERE m.marca.id = :marca")})
 public class Modelos implements Serializable {
     private static final long serialVersionUID = 1L;
     

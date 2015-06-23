@@ -13,11 +13,13 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
  * @author ricardo
+ * @param <T>
  */
 public abstract class GenericDao<T> {
 
@@ -44,7 +46,7 @@ public abstract class GenericDao<T> {
         return em.merge(entity);
     }
 
-    public T find(int entityID) {
+    public T find(Long entityID) {
         return em.find(entityClass, entityID);
     }
 
@@ -78,5 +80,13 @@ public abstract class GenericDao<T> {
         for (Entry<String, Object> entry : parameters.entrySet()) {
             query.setParameter(entry.getKey(), entry.getValue());
         }
+    }
+    
+    public List<T> executeQryList(CriteriaQuery cq) {
+        return em.createQuery(cq).getResultList();
+    }
+    
+    public CriteriaBuilder getCriteriaBuilder() {
+        return em.getCriteriaBuilder();
     }
 }

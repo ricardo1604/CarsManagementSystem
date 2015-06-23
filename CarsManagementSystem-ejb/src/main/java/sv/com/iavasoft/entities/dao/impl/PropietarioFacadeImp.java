@@ -38,7 +38,7 @@ public class PropietarioFacadeImp implements PropietarioFacade {
     }
 
     @Override
-    public Propietario find(int entityID) {
+    public Propietario find(Long entityID) {
         return propietarioDao.find(entityID);
     }
 

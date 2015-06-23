@@ -19,7 +19,7 @@ public interface PropietarioFacade {
     
     public abstract void delete(Propietario propietario);
 
-    public abstract Propietario find(int entityID);
+    public abstract Propietario find(Long entityID);
 
     public abstract List<Propietario> findAll();
 }

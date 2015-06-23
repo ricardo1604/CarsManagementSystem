@@ -38,13 +38,18 @@ public class ModelosFacadeImp implements ModelosFacade {
     }
 
     @Override
-    public Modelos find(int entityID) {
+    public Modelos find(Long entityID) {
         return modelosDao.find(entityID);
     }
 
     @Override
     public List<Modelos> findAll() {
         return modelosDao.findAll();
+    }
+
+    @Override
+    public List<Modelos> findByMarca(Long marcaId) {
+        return modelosDao.findByMarca(marcaId);
     }
 
 }

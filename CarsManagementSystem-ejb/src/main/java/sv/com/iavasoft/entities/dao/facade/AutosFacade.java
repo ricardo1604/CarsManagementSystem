@@ -21,7 +21,7 @@ public interface AutosFacade {
     
     public abstract void delete(Autos auto);
 
-    public abstract Autos find(int entityID);
+    public abstract Autos find(Long entityID);
 
     public abstract List<Autos> findAll();
 }

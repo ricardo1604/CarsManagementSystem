@@ -19,7 +19,7 @@ public interface TipoAutomotorFacade {
     
     public abstract void delete(TipoAutomotor tipoAutomotor);
 
-    public abstract TipoAutomotor find(int entityID);
+    public abstract TipoAutomotor find(Long entityID);
 
     public abstract List<TipoAutomotor> findAll();
 }

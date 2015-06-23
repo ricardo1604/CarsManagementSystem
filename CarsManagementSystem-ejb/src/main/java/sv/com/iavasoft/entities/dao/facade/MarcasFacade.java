@@ -19,7 +19,7 @@ public interface MarcasFacade {
     
     public abstract void delete(Marcas marca);
 
-    public abstract Marcas find(int entityID);
+    public abstract Marcas find(Long entityID);
 
     public abstract List<Marcas> findAll();
 }
