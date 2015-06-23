@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sv.com.iavasoft.entities.dao;
+package sv.com.iavasoft.entities.dao.facade;
 
 import java.util.List;
 import sv.com.iavasoft.entities.Marcas;

@@ -12,7 +12,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import sv.com.iavasoft.entities.Autos;
-import sv.com.iavasoft.entities.dao.AutosFacade;
+import sv.com.iavasoft.entities.dao.facade.AutosFacade;
 
 /**
  *

@@ -10,7 +10,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import sv.com.iavasoft.entities.Marcas;
 import sv.com.iavasoft.entities.dao.MarcasDao;
-import sv.com.iavasoft.entities.dao.MarcasFacade;
+import sv.com.iavasoft.entities.dao.facade.MarcasFacade;
 
 /**
  *
