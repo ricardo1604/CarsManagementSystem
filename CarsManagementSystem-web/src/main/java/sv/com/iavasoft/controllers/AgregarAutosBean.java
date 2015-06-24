@@ -5,15 +5,16 @@
  */
 package sv.com.iavasoft.controllers;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.primefaces.context.RequestContext;
@@ -22,7 +23,6 @@ import sv.com.iavasoft.entities.Marcas;
 import sv.com.iavasoft.entities.Modelos;
 import sv.com.iavasoft.entities.Propietario;
 import sv.com.iavasoft.entities.TipoAutomotor;
-import sv.com.iavasoft.entities.dao.AutosDao;
 import sv.com.iavasoft.entities.dao.facade.AutosFacade;
 import sv.com.iavasoft.entities.dao.facade.MarcasFacade;
 import sv.com.iavasoft.entities.dao.facade.ModelosFacade;
@@ -63,10 +63,18 @@ public class AgregarAutosBean implements Serializable {
     public void init() {
         System.out.println("INIT##################");
         auto = new Autos();
+        edit = false;
         marcasLst = marcasFacade.findAll();
         modelosLst = new ArrayList<>();
         tipoAutomotorLst = tipoAutomotorFacade.findAll();
         propietario = new Propietario();
+        
+        Autos autoEdit = (Autos) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("autoEdit");
+        if (autoEdit != null) {
+            
+            actualizarAuto(autoEdit);
+        }
+        
         System.out.println("Fin INIT----------------- ");
     }
     
@@ -80,6 +88,7 @@ public class AgregarAutosBean implements Serializable {
     private Long propietarioSelected;
     private String propietarioSelectedStr;
     private Propietario propietario;
+    private boolean edit;
 
     //  <editor-fold defaultstate="collapsed" desc="Getters & Setters">
     public List<Marcas> getMarcasLst() {
@@ -157,6 +166,14 @@ public class AgregarAutosBean implements Serializable {
     public void setPropietario(Propietario propietario) {
         this.propietario = propietario;
     }
+
+    public boolean isEdit() {
+        return edit;
+    }
+
+    public void setEdit(boolean edit) {
+        this.edit = edit;
+    }
     
     
     //    </editor-fold>
@@ -208,10 +225,22 @@ public class AgregarAutosBean implements Serializable {
         
         auto.setPropietario(propietarioFacade.update(propietario));
         
-        autosFacade.save(auto);
+        if (!edit) {
+            autosFacade.save(auto);
+            limpiar();
+        } else {
+            autosFacade.update(auto);
+            limpiar();
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/CarsManagementSystem-web/autos/buscar.sertracen");
+            } catch (IOException ex) {
+                Logger.getLogger(AgregarAutosBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         
         alert(FacesMessage.SEVERITY_INFO, "Auto guardado con exito!", "");
-        limpiar();
+        
         
         RequestContext.getCurrentInstance().update(":form1");
         
@@ -234,5 +263,22 @@ public class AgregarAutosBean implements Serializable {
         marcaSelected = 0L;
         modeloSelected = 0L;
         tipoAutoSelected = 0L;
+        if (edit) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("autoEdit", null);
+            edit = false;
+        }
+        
+    }
+    
+    public void actualizarAuto(Autos auto) {
+        System.out.println("Actualizar!!!!!!!!!!!!");
+        edit = true;
+        this.auto = auto;
+        this.propietario = auto.getPropietario();
+        this.marcaSelected = auto.getModelo().getMarca().getId();
+        buscarModeloByMarca();
+        this.modeloSelected = auto.getModelo().getId();
+        this.tipoAutoSelected = auto.getTipo().getId();
+        
     }
 }

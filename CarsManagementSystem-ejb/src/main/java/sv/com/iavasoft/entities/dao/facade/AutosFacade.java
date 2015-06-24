@@ -8,6 +8,7 @@ package sv.com.iavasoft.entities.dao.facade;
 import java.util.List;
 import javax.ejb.Local;
 import sv.com.iavasoft.entities.Autos;
+import sv.com.iavasoft.utils.Filtros;
 
 /**
  *
@@ -24,4 +25,8 @@ public interface AutosFacade {
     public abstract Autos find(Long entityID);
 
     public abstract List<Autos> findAll();
+    
+    public List<Autos> findAutosByFiltros(Filtros filtros);
+    
+    public Autos getWithIdDao(Long id);
 }

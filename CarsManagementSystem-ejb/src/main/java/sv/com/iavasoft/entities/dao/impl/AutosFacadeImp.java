@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import sv.com.iavasoft.entities.Autos;
 import sv.com.iavasoft.entities.dao.AutosDao;
 import sv.com.iavasoft.entities.dao.facade.AutosFacade;
+import sv.com.iavasoft.utils.Filtros;
 
 /**
  *
@@ -45,6 +46,16 @@ public class AutosFacadeImp implements AutosFacade {
     @Override
     public List<Autos> findAll() {
         return autosDao.findAll();
+    }
+
+    @Override
+    public List<Autos> findAutosByFiltros(Filtros filtros) {
+        return autosDao.findAutosByFiltros(filtros);
+    }
+
+    @Override
+    public Autos getWithIdDao(Long id) {
+        return autosDao.getWithIdDao(id);
     }
 
 }

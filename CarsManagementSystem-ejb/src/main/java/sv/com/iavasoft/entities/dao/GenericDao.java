@@ -37,9 +37,12 @@ public abstract class GenericDao<T> {
     }
 
     public void delete(T entity) {
-        T entityToBeRemoved = em.merge(entity);
 
-        em.remove(entityToBeRemoved);
+        em.remove(entity);
+    }
+    
+    public T getWithId(Long entityId) {
+        return em.getReference(entityClass, entityId);
     }
 
     public T update(T entity) {

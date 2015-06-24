@@ -5,10 +5,17 @@
  */
 package sv.com.iavasoft.controllers;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import sv.com.iavasoft.entities.Autos;
@@ -68,6 +75,7 @@ public class BuscarAutosBean implements Serializable{
     private List<TipoAutomotor> tipoAutomotorLst;
     private List<Propietario> propietariosLst;
     private List<Autos> autosMainList;
+    private Autos autoToDelete;
 
     public Filtros getFiltros() {
         return filtros;
@@ -116,11 +124,17 @@ public class BuscarAutosBean implements Serializable{
     public void setAutosMainList(List<Autos> autosMainList) {
         this.autosMainList = autosMainList;
     }
+
+    public Autos getAutoToDelete() {
+        return autoToDelete;
+    }
+
+    public void setAutoToDelete(Autos autoToDelete) {
+        this.autoToDelete = autoToDelete;
+    }
     
     
     
-    
- 
     public void llenarListaModelos() {
         if (filtros != null) {
             if (filtros.getMarca() != null) {
@@ -130,11 +144,39 @@ public class BuscarAutosBean implements Serializable{
     }
     
     public void buscarAutomoviles() {
-        autosMainList = autosFacade.findAll();
+        System.out.println("#Buscando..................");
         if (filtros != null) {
-            
+            System.out.println("ENtra a realizar la busq-.............");
+            autosMainList = autosFacade.findAutosByFiltros(filtros);
+            System.out.println("La lista: " + autosMainList);
         }
     }
     
+    public void actualizarAuto(Autos auto) {
+        try {
+            System.out.println("Actualizando##########");
+            ExternalContext ex = FacesContext.getCurrentInstance().getExternalContext();
+            
+            ex.getSessionMap().put("autoEdit", auto);
+            ex.redirect("/CarsManagementSystem-web/autos/agregar.sertracen");
+            
+        } catch (IOException ex1) {
+            Logger.getLogger(BuscarAutosBean.class.getName()).log(Level.SEVERE, null, ex1);
+        }
+    }
     
+    public void eliminarAuto() {
+        System.out.println("Boorando Auto " + autoToDelete);
+        if (autoToDelete != null) {
+            autosFacade.delete(autosFacade.getWithIdDao(autoToDelete.getId()));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Auto eliminado satisfactoriamente", ""));
+            buscarAutomoviles();
+        }
+    }
+    
+    public void limpiar() {
+        autoToDelete = null;
+        autosMainList = new ArrayList<>();
+        filtros = new Filtros();
+    }
 }

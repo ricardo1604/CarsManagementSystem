@@ -30,8 +30,9 @@
                                     <center>
                                         <h3>INGRESAR DATOS DE AUTOMOVIL</h3>
                                         <h:panelGrid columns="2" style="width: 50%">
-                                            <h:outputText value="ID::" rendered="false"/>
-                                            <b:inputText value="" styleClass="margenForm" rendered="false"/>
+                                            <h:outputText value="ID:" rendered="#{agregarAutosBean.edit}"/>
+                                            <b:inputText value="#{agregarAutosBean.auto.id}" styleClass="margenForm"
+                                                         readonly="true" rendered="#{agregarAutosBean.edit}" fieldSize="sm" style="font-size: medium"/>
                                             <h:outputText value="Marca:"/>
                                             <p:selectOneMenu value="#{agregarAutosBean.marcaSelected}" styleClass="margenForm" style="width: 60%">
                                                 <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
@@ -84,7 +85,7 @@
                                         <h:panelGrid columns="3" style="width: 50%; text-align: center">
                                             <b:commandButton iconAwesome="fa fa-close" value="Cancelar"/>
                                             <p:spacer/>
-                                            <b:commandButton iconAwesome="fa fa-save" value="Guardar" look="primary" actionListener="#{agregarAutosBean.guardarAuto()}"  />
+                                            <b:commandButton iconAwesome="fa fa-save" value="Guardar" look="primary" actionListener="#{agregarAutosBean.guardarAuto()}" ajax="false" />
                                         </h:panelGrid>
 
 

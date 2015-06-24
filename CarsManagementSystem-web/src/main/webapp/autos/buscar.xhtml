@@ -21,6 +21,7 @@
             </h:head>
             <h:body>
                 <h:form id="form2">
+                    <p:growl id="growl2" showDetail="true" sticky="true" life="4000" autoUpdate="true"/>
                     <b:container>
                         <b:row>
                             <b:column span="12">
@@ -30,18 +31,18 @@
                                     <h:panelGrid columns="2" style="width: 90%;">
                                         <h:outputText value="Marca:"/>
                                         <p:selectOneMenu value="#{buscarAutosBean.filtros.marca}" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                            <f:selectItem itemValue="#{null}" itemLabel="- seleccionar -"/>
                                             <f:selectItems value="#{buscarAutosBean.marcasLst}" var="mar" itemLabel="#{mar.nombre}" itemValue="#{mar.id}"/>
                                             <p:ajax event="change" listener="#{buscarAutosBean.llenarListaModelos()}" update=":form2:cmdModelos"/>
                                         </p:selectOneMenu>
                                         <h:outputText value="Modelo:"/>
                                         <p:selectOneMenu id="cmdModelos" value="#{buscarAutosBean.filtros.modelo}" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                            <f:selectItem itemValue="#{null}" itemLabel="- seleccionar -"/>
                                             <f:selectItems value="#{buscarAutosBean.modelosLst}" var="models" itemLabel="#{models.nombre}" itemValue="#{models.id}"/>
                                         </p:selectOneMenu>
                                         <h:outputText value="A&ntilde;o:"/>
                                         <p:selectOneMenu value="#{buscarAutosBean.filtros.anio}" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                            <f:selectItem itemValue="#{null}" itemLabel="- seleccionar -"/>
                                             <f:selectItem itemValue="2016" itemLabel="2016"/>
                                             <f:selectItem itemValue="2015" itemLabel="2015"/>
                                             <f:selectItem itemValue="2014" itemLabel="2014"/>
@@ -58,12 +59,12 @@
                                     <h:panelGrid columns="2" style="width: 90%">
                                         <h:outputText value="Tipo:"/>
                                         <p:selectOneMenu value="#{buscarAutosBean.filtros.tipo}" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                            <f:selectItem itemValue="#{null}" itemLabel="- seleccionar -"/>
                                             <f:selectItems value="#{buscarAutosBean.tipoAutomotorLst}" var="ta" itemLabel="#{ta.nombre}" itemValue="#{ta.id}"/>
                                         </p:selectOneMenu>
                                         <h:outputText value="Propietario:"/>
                                         <p:selectOneMenu value="#{buscarAutosBean.filtros.propietario}" styleClass="margenForm">
-                                            <f:selectItem itemValue="0" itemLabel="- seleccionar -"/>
+                                            <f:selectItem itemValue="#{null}" itemLabel="- seleccionar -"/>
                                             <f:selectItems value="#{buscarAutosBean.propietariosLst}" var="propi" itemLabel="#{propi.nombres} #{propi.apellidos} (#{propi.nit})" itemValue="#{propi.id}"/>
                                         </p:selectOneMenu>
                                         <h:outputText value="Placa:"/>
@@ -80,67 +81,110 @@
                                         <p:spacer/>
                                     </h:panelGrid>
                                 </b:column>
-                                
+
                             </b:column>
                         </b:row>
                         <b:row>
                             <b:column span="12">
                                 <b:buttonGroup>
                                     <b:commandButton value="Buscar" iconAwesome="fa fa-search" look="primary" 
-                                                  actionListener="#{buscarAutosBean.buscarAutomoviles()}"/>
-                                    <b:commandButton value="Reporte" iconAwesome="fa fa-file-pdf-o" look="success"/>
+                                                     actionListener="#{buscarAutosBean.buscarAutomoviles()}"/>
+                                    <b:commandButton value="Reporte" iconAwesome="fa fa-file-pdf-o" look="success">
+                                        <p:dataExporter type="pdf" target="autosTable" fileName="Autos" />
+                                    </b:commandButton>
                                     <b:commandButton value="Limpiar" iconAwesome="fa fa-refresh"/>
                                 </b:buttonGroup>
-                                
+
                             </b:column>
                         </b:row>
                         <b:row>
 
                             <b:column span="12" >
                                 <p:separator/>
-                                <p:dataTable id="autosTable" value="#{buscarAutosBean.autosMainList}" var="aut" paginator="true" emptyMessage="No se han encontrado registros">
+                                <p:dataTable id="autosTable" value="#{buscarAutosBean.autosMainList}" var="aut" paginator="true" emptyMessage="No se han encontrado registros"
+                                             style="font-size: small">
                                     <f:facet name="header">
                                         Listado de Automoviles
 
                                     </f:facet>
-                                    <p:column headerText="Marca">
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Marca"/>
+                                        </f:facet>
                                         <h:outputText value="#{aut.modelo.marca.nombre}"/>
                                     </p:column>
-                                    <p:column headerText="Modelo">
+                                    <p:column headerText="">
+                                        <f:facet name="header">
+                                            <h:outputText value="Modelo"/>
+                                        </f:facet>
                                         <h:outputText value="#{aut.modelo.nombre}"/>
                                     </p:column>
-                                    <p:column headerText="A&ntilde;o">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="A&ntilde;o"/>
+                                        </f:facet>
                                         <h:outputText value="#{aut.anio}"/>
                                     </p:column>
-                                    <p:column headerText="Num. motor">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Num. motor"/>
+                                        </f:facet>
                                         <h:outputText value="#{aut.numMotor}"/>
                                     </p:column>
-                                    <p:column headerText="Num. chasis">
+                                    <p:column >
+                                        <f:facet name="header">
+                                            <h:outputText value="Num. chasis"/>
+                                        </f:facet>
                                         <h:outputText value="#{aut.numChasis}"/>
                                     </p:column>
-                                    <p:column headerText="Placa">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Placa"/>
+                                        </f:facet>
                                         <h:outputText value="#{aut.placas}"/>
                                     </p:column>
-                                    <p:column headerText="Propietario">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Propietario"/>
+                                        </f:facet>
                                         <h:outputText value="#{aut.propietario.nombres} #{aut.propietario.apellidos}"/>
                                     </p:column>
-                                    <p:column headerText="Tipo">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Tipo"/>
+                                        </f:facet>
                                         <h:outputText value="#{aut.tipo.nombre}"/>
                                     </p:column>
-                                    <p:column headerText="Color">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Color"/>
+                                        </f:facet>
                                         <h:outputText value="#{aut.color}"/>
                                     </p:column>
-                                    <p:column>
-                                        <b:commandButton value="" iconAwesome="fa fa-edit" style="float: left" look="primary"/>
-                                        <b:commandButton value="" iconAwesome="fa fa-trash" style="float: right" look="primary"/>
+                                    <p:column exportable="false">
+                                        <b:commandButton value="" iconAwesome="fa fa-edit" style="float: left" look="primary" actionListener="#{buscarAutosBean.actualizarAuto(aut)}" />
+                                        <b:commandButton value="" iconAwesome="fa fa-trash" style="float: right" look="primary" onclick="PF('confirmDlg').show();" ajax="true" actionListener="#{buscarAutosBean.setAutoToDelete(aut)}"/>
                                     </p:column>
                                 </p:dataTable>
                             </b:column>
                         </b:row>
                     </b:container>
                 </h:form>
+                <h:form>
+                    <p:dialog modal="true" showEffect="fade" hideEffect="explode" widgetVar="confirmDlg" closeOnEscape="true" resizable="false">
+                        <h:panelGrid>
+                            <h:outputText value="Desea eliminar este Auto?"/>
+                        </h:panelGrid>
+                        <f:facet name="footer">
+                            <b:commandButton value="Cancel" onclick="PF('confirmDlg').hide();" iconAwesome="fa fa-times"/>
+                            <p:spacer/>
+                            <b:commandButton value="Aceptar" onclick="PF('confirmDlg').hide();" actionListener="#{buscarAutosBean.eliminarAuto()}" look="primary" iconAwesome="fa fa-check" update=":form2"/>
+                        </f:facet>
+                    </p:dialog>
+                </h:form>
             </h:body>
         </ui:define>
     </ui:composition>
+
 </html>
 
